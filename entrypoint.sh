@@ -10,7 +10,7 @@ PMTILES_OUTPUT="${PMTILES_DATA_PATH}/${PMTILES_FILENAME}"
 TMP_OUTPUT="${PMTILES_OUTPUT}.tmp"
 
 cat > /etc/crontab <<CRON
-$CRON_SCHEDULE aria2c -x $ARIA2C_CONNECTIONS -s $ARIA2C_CONNECTIONS -c --max-tries=$ARIA2C_MAX_TRIES --retry-wait=$ARIA2C_RETRY_WAIT --console-log-level=$ARIA2C_LOG_LEVEL "$PMTILES_SOURCE_URL" -o "$TMP_OUTPUT" && mv "$TMP_OUTPUT" "$PMTILES_OUTPUT"
+$CRON_SCHEDULE bash -c 'URL="\${PMTILES_SOURCE_URL:-https://build.protomaps.com/\$(date -d @\$((\$(date +%s) - 86400)) +%Y%m%d).pmtiles}"; aria2c -x $ARIA2C_CONNECTIONS -s $ARIA2C_CONNECTIONS -c --max-tries=$ARIA2C_MAX_TRIES --retry-wait=$ARIA2C_RETRY_WAIT --console-log-level=$ARIA2C_LOG_LEVEL "\$URL" -o "$TMP_OUTPUT" && mv "$TMP_OUTPUT" "$PMTILES_OUTPUT"'
 CRON
 
 echo "Starting pmtiles-updater"
