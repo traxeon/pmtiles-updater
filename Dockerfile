@@ -34,4 +34,12 @@ ENV ARIA2C_RETRY_WAIT=60
 # Console log level for aria2c (debug, info, notice, warn, error).
 ENV ARIA2C_LOG_LEVEL=notice
 
+# How many days since the last successful download before the container is considered unhealthy.
+ENV HEALTHCHECK_MAX_AGE_DAYS=8
+
+# Healthy if the output file exists and was modified within HEALTHCHECK_MAX_AGE_DAYS days.
+HEALTHCHECK --interval=1h --timeout=10s --start-period=2h --retries=3 \
+  CMD test -f "${PMTILES_DATA_PATH}/${PMTILES_FILENAME}" && \
+      test $(( ( $(date +%s) - $(date +%s -r "${PMTILES_DATA_PATH}/${PMTILES_FILENAME}") ) / 86400 )) -lt ${HEALTHCHECK_MAX_AGE_DAYS} || exit 1
+
 ENTRYPOINT ["/entrypoint.sh"]
