@@ -18,4 +18,12 @@ echo "  Schedule:  $CRON_SCHEDULE"
 echo "  URL:       $PMTILES_SOURCE_URL"
 echo "  Output:    $PMTILES_OUTPUT"
 
+echo "Validating URL..."
+http_code=$(curl -s -o /dev/null -w "%{http_code}" --head "$PMTILES_SOURCE_URL")
+if [ "$http_code" != "200" ]; then
+  echo "ERROR: URL returned HTTP $http_code — check PMTILES_SOURCE_URL"
+  exit 1
+fi
+echo "  URL OK (HTTP $http_code)"
+
 exec supercronic /etc/crontab
