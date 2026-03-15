@@ -31,4 +31,7 @@ ENV ARIA2C_MAX_TRIES=5
 # Seconds to wait between retry attempts.
 ENV ARIA2C_RETRY_WAIT=60
 
+# Console log level for aria2c (debug, info, notice, warn, error).
+ENV ARIA2C_LOG_LEVEL=notice
+
 ENTRYPOINT ["/entrypoint.sh"]
