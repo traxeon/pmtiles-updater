@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
+# use busybox friendly date for yesterday - trax
 if [ -z "$PMTILES_SOURCE_URL" ]; then
-  PMTILES_SOURCE_URL="https://build.protomaps.com/$(date -d yesterday +%Y%m%d).pmtiles"
+  PMTILES_SOURCE_URL="https://build.protomaps.com/$(date -d @$(($(date +%s) - 86400)) +%Y%m%d).pmtiles"
 fi
 
 PMTILES_OUTPUT="${PMTILES_DATA_PATH}/${PMTILES_FILENAME}"
