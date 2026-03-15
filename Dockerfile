@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 # Install aria2 for downloading and supercronic for container-friendly cron scheduling
-RUN apk add --no-cache aria2 bash supercronic
+RUN apk add --no-cache aria2 bash supercronic tzdata
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
@@ -15,7 +15,10 @@ ENV PMTILES_DATA_PATH="/data"
 # Output filename for the downloaded PMTiles file.
 ENV PMTILES_FILENAME="world.pmtiles"
 
-# Cron schedule for updates. Default: every Monday at 3am UTC.
+# Timezone for cron schedule interpretation. Defaults to UTC.
+ENV TZ="UTC"
+
+# Cron schedule for updates. Default: every Monday at 3am local time.
 ENV CRON_SCHEDULE="0 3 * * 1"
 
 # Number of parallel connections for aria2c download.
