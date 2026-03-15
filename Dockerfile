@@ -1,7 +1,8 @@
 FROM alpine:latest
 
 # Install aria2 for downloading and supercronic for container-friendly cron scheduling
-RUN apk add --no-cache aria2 bash supercronic tzdata
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    apk add --no-cache aria2 bash supercronic tzdata
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
