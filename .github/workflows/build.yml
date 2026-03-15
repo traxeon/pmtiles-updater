@@ -1,7 +1,9 @@
 name: Build and Push
 on:
   push:
-    branches: [main]
+    tags:
+      # only build when a version is tagged
+      - 'v*'
 jobs:
   build:
     runs-on: debian-latest
