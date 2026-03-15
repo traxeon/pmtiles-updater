@@ -1,14 +1,30 @@
 FROM alpine:latest
-RUN apk add --no-cache aria2 curl bash && \
-    curl -fsSLo /usr/local/bin/supercronic \
-      https://github.com/aptible/supercronic/releases/latest/download/supercronic-linux-amd64 && \
-    chmod +x /usr/local/bin/supercronic
+
+# Install aria2 for downloading and supercronic for container-friendly cron scheduling
+RUN apk add --no-cache aria2 bash supercronic
+
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-ENV PMTILES_URL=""
-ENV PMTILES_OUTPUT="/data/world.pmtiles"
+
+# URL to download PMTiles from. Defaults to latest Protomaps planet build if unset.
+ENV PMTILES_SOURCE_URL=""
+
+# Directory where the PMTiles file will be stored. Mount a volume here.
+ENV PMTILES_DATA_PATH="/data"
+
+# Output filename for the downloaded PMTiles file.
+ENV PMTILES_FILENAME="world.pmtiles"
+
+# Cron schedule for updates. Default: every Monday at 3am UTC.
 ENV CRON_SCHEDULE="0 3 * * 1"
+
+# Number of parallel connections for aria2c download.
 ENV ARIA2C_CONNECTIONS=8
+
+# Maximum number of retry attempts on download failure.
 ENV ARIA2C_MAX_TRIES=5
+
+# Seconds to wait between retry attempts.
 ENV ARIA2C_RETRY_WAIT=60
+
 ENTRYPOINT ["/entrypoint.sh"]
