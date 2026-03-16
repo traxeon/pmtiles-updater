@@ -12,7 +12,7 @@ On startup, the container validates the source URL is reachable, then hands off 
 
 ```bash
 docker run -d \
-  -e PMTILES_SOURCE_URL="https://build.protomaps.com/20260314.pmtiles" \
+  -e PMTILES_SOURCE_URL="https://raw.githubusercontent.com/traxeon/pmtiles-updater/630531226d8878880b724fa9b808eeaaeaf887fc/dc.pmtiles" \
   -v /data/tiles:/data \
   ghcr.io/traxeon/pmtiles-updater:latest
 ```
