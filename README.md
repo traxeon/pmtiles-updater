@@ -21,8 +21,6 @@ docker run -d \
 
 A ready-to-use `compose.yml` is included in this repo. Mount a volume at `PMTILES_DATA_PATH` (default: `/data`) and any other service that reads the file must mount the same volume.
 
-A `compose.mapviewer.yml` example is also included for integrating with an existing nginx map viewer stack.
-
 ## Environment variables
 
 | Variable | Default | Description |
@@ -71,5 +69,5 @@ Images are published to [GitHub Container Registry](https://github.com/traxeon/p
 docker pull ghcr.io/traxeon/pmtiles-updater:latest
 
 # specific version
-docker pull ghcr.io/traxeon/pmtiles-updater:1.0.0
+docker pull ghcr.io/traxeon/pmtiles-updater:1.1.0
 ```
